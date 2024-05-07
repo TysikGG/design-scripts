@@ -2,29 +2,34 @@
 <html>
     <script type="text/javascript">  
         window.onload = function(){  
+            function getRndInteger(min, max) { return Math.floor(Math.random() * (max - min) ) + min };
+
             const element = document.getElementById("test");
             const text = "123123";
-            const time = 400;
 
             let position = 0;
             let increment = true;
             let tempText = "";
 
-            setInterval(() => {
-                if (position == 0) {
-                    increment = true;
-                } else if (tempText.length == text.length) {
-                    increment = false;
-                }
-                if (increment) {
-                    tempText += text[position];
-                    position += 1;
-                } else {
-                    tempText = tempText.substring(0, tempText.length - 1);
-                    position -= 1;
-                }
-                element.innerHTML = tempText;
-            }, time)
+            (function runInterval() {
+                interval = getRndInteger(100, 500);
+                setTimeout(() => {
+                    if (position == 0) {
+                        increment = true;
+                    } else if (tempText.length == text.length) {
+                        increment = false;
+                    }
+                    if (increment) {
+                        tempText += text[position];
+                        position += 1;
+                    } else {
+                        tempText = tempText.substring(0, tempText.length - 1);
+                        position -= 1;
+                    }
+                    element.innerHTML = tempText;
+                    runInterval();
+                }, interval);
+            })()
         }
       </script>
     <body>
